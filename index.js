@@ -8,6 +8,8 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
+var params = process.argv.slice(2);
+
 var showBears = function () {
 connection.query('SELECT * from happy_bears;', function(err, rows, fields) {
   if (err) throw err;
@@ -19,7 +21,7 @@ connection.query('SELECT * from happy_bears;', function(err, rows, fields) {
 }
 
 var addBear = function() {
-  connection.query('INSERT INTO happy_bears (name, favorite_food, personality) VALUES (?,?,?)', ['Mama', 'Porridge', 'Chiller'], function(err, result) {
+  connection.query('INSERT INTO happy_bears (name, favorite_food, personality) VALUES (?,?,?)', [params[0], params[1], params[2]], function(err, result) {
     if (err) throw err;
 
     console.log("insert finished~!")
@@ -38,8 +40,8 @@ var deleteBear = function () {
 }
 
 
+addBear();
 
-deleteBear();
 
 showBears();
 
